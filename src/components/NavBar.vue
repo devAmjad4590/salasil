@@ -21,7 +21,7 @@ export default {
 
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Zain:wght@400;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Zain:wght@400;800&display=swap");
 
 .title {
   font-size: 35px;
