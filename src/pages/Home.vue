@@ -6,15 +6,13 @@
     <v-container>
       <v-row no-gutters>
         <v-col
-          v-for="i in 10"
-          :key="i"
+          v-for="course in this.courses"
+          :key="course['معرف قائمة التشغيل']"
           class="pa-6"
-          sm="7"
-          xs="12"
-          md="6"
-          lg="4"
+          sm="4"
+          
         >
-          <Card></Card>
+          <Card :course="course" ></Card>
         </v-col>
       </v-row>
     </v-container>
@@ -26,6 +24,19 @@ import NavBar from "../components/NavBar.vue";
 import Card from "../components/Card.vue";
 
 export default {
+  created(){
+    fetch('/db/salasil.json')
+    .then(response => response.json())
+    .then(data => {
+      this.courses = data.courses
+      console.log(this.courses)
+    })
+  },
+  data(){
+    return{
+      courses: []
+    }
+  },
   components: {
     NavBar,
     Card,

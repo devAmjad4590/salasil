@@ -1,0 +1,9 @@
+/* global.css */
+body {
+    direction: rtl;
+  }
+  
+  /* Override the .v-locale--is-ltr class */
+  .v-locale--is-ltr {
+    direction: rtl !important;
+  }

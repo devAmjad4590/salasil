@@ -7,6 +7,8 @@
     elevation="10"
     hover
     link
+    :to="{ name: 'Playlist', params: { id: this.course['معرف قائمة التشغيل'] } }"
+
   >
     <div class="image-container">
       <v-img
@@ -20,15 +22,14 @@
       />
       <div class="overlay">
         <div class="rectangle">
-          <span class="rectangle-text">٤ حلقات</span>
+          <span class="rectangle-text">{{ this.course["عدد الحلقات"] }} حلقات</span>
         </div>
       </div>
     </div>
 
-    <h2 class="card-title">تذوق العبادات</h2>
+    <h2 class="card-title">{{ this.course.الاسم }}</h2>
     <p class="text-right">
-      سلسلة "تذوق العبادات" من بودكاست فاهم تهدف إلى تعميق فهم المستمعين
-      للعبادات المختلفة وإبراز جمالها وتأثيرها الروحي والنفسي.
+      {{ truncatedText }}
     </p>
   </v-card>
 </template>
@@ -36,20 +37,18 @@
 <script>
 export default {
   name: "Card",
-  data() {
-    return {
-      title: "",
-      fullText: "",
-      img: "",
-      ep: 0,
-    };
+  created(){
+    console.log(this.course)
+  },
+  props: {
+    course: Object
   },
   computed: {
     truncatedText() {
-      const words = this.fullText.split(" ");
-      return words.length > 30
-        ? words.slice(0, 30).join(" ") + "..."
-        : this.fullText;
+      const words = this.course["وصف مختصر"].split(" ");
+      return words.length > 20
+        ? words.slice(0, 20).join(" ") + "..."
+        : this.course["وصف مختصر"];
     },
   },
 };
@@ -73,7 +72,7 @@ export default {
 .rectangle {
   background-color: #990000;
   padding: 1.9px 14px;
-  width: 85px;
+  width: 100px;
   height: 29px;
   border-radius: 3px;
     
@@ -83,6 +82,7 @@ export default {
   font-family: "Zain", sans-serif;
   color: white;
   font-size: 18px;
+  text-align: right;
 }
 
 .centered-img {
