@@ -75,6 +75,8 @@ export default {
   padding: 1.9px 14px;
   width: 85px;
   height: 29px;
+  border-radius: 3px;
+    
 }
 
 .rectangle-text {
