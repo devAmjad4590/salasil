@@ -29,8 +29,8 @@ export default {
     .then(response => response.json())
     .then(data => {
       this.courses = data.courses
-      console.log(this.courses)
     })
+    
   },
   data(){
     return{
