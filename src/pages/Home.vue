@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar></NavBar>  
   </div>
   <div class="pa-4">
     <v-container>
