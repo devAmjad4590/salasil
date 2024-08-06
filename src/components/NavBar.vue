@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="#2EBC2E" :elevation="2" class="app-bar">
-    <v-app-bar-nav-icon @click.stop="drawer=!drawer">
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer">
       <IconMenu2 size="35" color="white" />
     </v-app-bar-nav-icon>
     <v-spacer></v-spacer>
@@ -8,7 +8,17 @@
     <v-spacer></v-spacer>
   </v-app-bar>
   <v-navigation-drawer class="pa-5" v-model="drawer" location="right">
-    <h3 class="drawer-title">غربلة السلاسل</h3>
+    <h3 class="drawer-title mb-4">ترتيب</h3>
+    <v-select
+      label="اختر التريب"
+      class="mt-3"
+      rounded
+      :items="['الاقصر' , 'الاطول']"
+      variant="solo"
+      v-model="sorting"
+      @update:modelValue="handleChange"
+    ></v-select>
+    <h3 class="drawer-title">غربلة</h3>
     <h4 class="mt-5 drawer-subtitle">اللغة</h4>
     <h5 class="mt-3 drawer-subtitle2">اللغة المسموعة</h5>
 
@@ -18,46 +28,99 @@
       rounded
       :items="available_languages"
       variant="solo"
+      v-model="اللغة_المسموعة"
+      @update:modelValue="handleChange"
     ></v-select>
 
     <h5 class="mt-3 drawer-subtitle2">اللغة المقروءة</h5>
-    <div v-for="lang in available_languages" :key="lang" >
-      <CustomCheckbox :value="lang" v-model:modelValue="اللغات_المقروءة" >
-      {{ lang }}
-     </CustomCheckbox>
+    <div v-for="lang in available_languages" :key="lang">
+      <CustomCheckbox :value="lang" v-model:modelValue="اللغات_المقروءة" @update:modelValue="handleChange">
+        {{ lang }}
+      </CustomCheckbox>
     </div>
 
     <h5 class="mt-7 drawer-subtitle">التصنيف</h5>
-    <div v-for="category in categories" :key="category" >
-      <CustomCheckbox :value="category" v-model:modelValue="التصنيف" >
-      {{ category }}
-     </CustomCheckbox>
+    <div v-for="category in displayedCategories" :key="category">
+      <CustomCheckbox :value="category" v-model:modelValue="التصنيف" @update:modelValue="handleChange">
+        {{ category }}
+      </CustomCheckbox>
     </div>
+    <v-btn variant="plain" :ripple="false" v-if="!showAllCategories" @click="showMoreCategories">عرض المزيد...</v-btn>
+    <v-btn variant="plain" :ripple="false" v-else @click="showMoreCategories">عرض أقل...</v-btn>
+    <h5 class="mt-7 drawer-subtitle">المدة</h5>
+    <v-btn
+    variant="plain"  @click="handleClick(10)" style="display:block" :ripple="false" >10 ساعة</v-btn>
+    <v-btn
+    variant="plain"  @click="handleClick(20)" style="display:block" :ripple="false" >20 ساعة</v-btn>
+    <v-btn
+    variant="plain"  @click="handleClick(30)" style="display:block" :ripple="false" >30 ساعة</v-btn>
+    <v-btn
+    variant="plain"  @click="handleClick(Number.POSITIVE_INFINITY)" class="mb-6" style="display:block" :ripple="false" >30+ ساعة</v-btn>
+    
+
   </v-navigation-drawer>
 </template>
 
 <script>
 import { IconMenu2 } from "@tabler/icons-vue";
 import CustomCheckbox from "./CustomCheckBox.vue";
+import {set, get} from '../db'
 export default {
   data() {
     return {
       drawer: false,
       available_languages: ["English", "العربية"],
-      categories: ['فقه', "دعوة", "حديث", "تفسير"],
+      categories: ["فقه", "دعوة", "حديث", "تفسير", "وثائقيات"],
       اللغات_المقروءة: [],
-      اللغة_المسموعة: false,
+      اللغة_المسموعة: "العربية",
       التصنيف: [],
-      المدة: {
-        من: 0,
-        الى: 0,
-      },
+      showAllCategories: false,
+      sorting: "الاقصر",
+      timeStamp: 0,
     };
   },
   components: {
     IconMenu2,
     CustomCheckbox,
   },
+  computed: {
+    displayedCategories() {
+      return this.showAllCategories
+        ? this.categories
+        : this.categories.slice(0, 3);
+    },
+    
+  },
+  methods: {
+      showMoreCategories() {
+        this.showAllCategories = !this.showAllCategories;
+      },
+      handleChange(){
+        set({
+          filters: {
+            التصانيف: this.التصنيف,
+            subtitle_languages: this.اللغات_المقروءة,
+            audio_language: this.اللغة_المسموعة,
+            sorting: this.sorting
+          }
+        })
+        this.$emit('filters-changed')
+        
+
+      },
+      handleClick(value){
+        this.timeStamp = value
+        set({
+          filters: {
+            التصانيف: this.التصنيف,
+            subtitle_languages: this.اللغات_المقروءة,
+            audio_language: this.اللغة_المسموعة,
+            المدة: this.timeStamp
+          }
+        }) 
+        this.$emit('filters-changed')
+      }
+    }
 };
 </script>
 
@@ -73,9 +136,11 @@ export default {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+
 .app-bar {
   padding: 0 16px;
 }
+
 
 .drawer-title {
   font-size: 25px;
