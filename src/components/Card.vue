@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <h2 class="card-title">{{ this.course.الاسم }} {{ this.course['المدة الإجمالية (بالساعات)'] }}</h2>
+    <h2 class="card-title">{{ this.course.الاسم }}</h2>
     <p class="text-right">
       {{ truncatedText }}
     </p>

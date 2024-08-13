@@ -116,6 +116,8 @@ export default {
         filteredCourses = filteredCourses.sort((a, b) => b.المدة - a.المدة);
       }
 
+      // return the user to the top page
+      window.scrollTo(0, 0);
       return filteredCourses;
     },
   },
