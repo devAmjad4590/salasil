@@ -13,10 +13,10 @@
     <div class="image-container">
       <v-img
         cover
-        src="/maxresdefault.jpg"
+        :src="course['الفيديوهات'][0]['صورة مصغرة']"
         aspect-ratio="4/3"
         :width="350"
-        :height="200"
+        :height="193"
         class="centered-img"
         rounded
       />
@@ -37,9 +37,6 @@
 <script>
 export default {
   name: "Card",
-  created(){
-    console.log(this.course)
-  },
   props: {
     course: Object
   },
@@ -72,7 +69,7 @@ export default {
 .rectangle {
   background-color: #990000;
   padding: 1.9px 14px;
-  width: 100px;
+  width: 102px;
   height: 29px;
   border-radius: 3px;
     
