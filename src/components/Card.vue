@@ -7,8 +7,10 @@
     elevation="10"
     hover
     link
-    :to="{ name: 'Playlist', params: { id: this.course['معرف قائمة التشغيل'] } }"
-
+    :to="{
+      name: 'Playlist',
+      params: { id: this.course['معرف قائمة التشغيل'] },
+    }"
   >
     <div class="image-container">
       <v-img
@@ -22,7 +24,9 @@
       />
       <div class="overlay">
         <div class="rectangle">
-          <span class="rectangle-text">{{ this.course["عدد الحلقات"] }} حلقات</span>
+          <span class="rectangle-text"
+            >{{ this.course["عدد الحلقات"] }} حلقات</span
+          >
         </div>
       </div>
     </div>
@@ -38,7 +42,7 @@
 export default {
   name: "Card",
   props: {
-    course: Object
+    course: Object,
   },
   computed: {
     truncatedText() {
@@ -72,7 +76,6 @@ export default {
   width: 102px;
   height: 29px;
   border-radius: 3px;
-    
 }
 
 .rectangle-text {
