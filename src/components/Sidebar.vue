@@ -89,13 +89,15 @@ export default {
 .left {
   display: flex;
   margin-left: 20px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .right {
   font-family: 20px "Zain", sans-serif;
   display: flex;
   margin-right: 20px;
-
-  color: #333;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .right {
@@ -130,6 +132,8 @@ export default {
   justify-items: first baseline;
   margin-right: 20px;
   margin-left: -75px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
 }
 
 .list-box {

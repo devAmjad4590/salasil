@@ -16,11 +16,26 @@
         والذكر والقرآن والدعاء، ويسعى إلى تقديمها بشكل يثري التجربة الروحية
         للمستمعين.
       </p>
-      <p><strong>التصنيف:</strong> فقه</p>
-      <p><strong>اللغة:</strong> العربية</p>
-      <p><strong>المقدم:</strong> د. أحمد العربي</p>
-      <p><strong>المدة:</strong> 7:19:19</p>
-      <p><strong>التاريخ:</strong> الثلاثاء 28 مايو 2024</p>
+      <p>
+        <strong><span class="label">التصنيف:</span></strong>
+        <span class="value">فقه</span>
+      </p>
+      <p>
+        <strong><span class="label">اللغة:</span></strong>
+        <span class="value">العربية</span>
+      </p>
+      <p>
+        <strong><span class="label">المقدم:</span></strong>
+        <span class="value">د. أحمد العربي</span>
+      </p>
+      <p>
+        <strong><span class="label">المدة:</span></strong>
+        <span class="value">7:19:19</span>
+      </p>
+      <p>
+        <strong><span class="label">التاريخ:</span></strong>
+        <span class="value">الثلاثاء 28 مايو 2024</span>
+      </p>
     </div>
   </div>
 </template>
@@ -70,6 +85,24 @@ export default {
   margin-top: 10px;
   cursor: pointer;
   border-radius: 4px;
+}
+
+h2 {
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: green;
+}
+
+.label {
+  font-weight: bold;
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.value {
+  font-weight: bold;
+  color: green;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .details h2 {
