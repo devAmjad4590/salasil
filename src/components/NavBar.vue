@@ -4,7 +4,9 @@
       <IconMenu2 v-if="button" size="35" color="white" />
     </v-app-bar-nav-icon>
     <v-spacer></v-spacer>
-    <h1 class="title">سلاسل</h1>
+    <router-link to="/" class="title-link">
+      <h1 class="title">سلاسل</h1>
+    </router-link>
     <v-spacer></v-spacer>
   </v-app-bar>
   <v-navigation-drawer
@@ -179,6 +181,16 @@ export default {
 
 .app-bar {
   padding: 0 16px;
+}
+
+.title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.title-link:hover {
+  color: #7785dc;
 }
 
 .drawer-title {

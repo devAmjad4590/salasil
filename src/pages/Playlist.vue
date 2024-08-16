@@ -4,8 +4,10 @@
       <NavBar :button="false"></NavBar>
 
       <div class="p-container">
-        <MainContent></MainContent>
-        <Sidebar></Sidebar>
+        <MainContent v-if="!loading" :course="selectedCourse" ></MainContent>
+        <div class="scroller">
+        <Sidebar   v-if="!loading" :course="selectedCourse" ></Sidebar>
+      </div>
       </div>
     </div>
   </div>
@@ -23,6 +25,24 @@ export default {
     Sidebar,
     MainContent,
     NavBar,
+  },
+  async created(){
+    const courseId = this.$route.params.id;
+    try {
+      const response = await fetch('/db/salasil.json');
+      const data = await response.json();
+      this.selectedCourse = await data.courses.find(course => course['معرف قائمة التشغيل'] == courseId);
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    } finally{
+      this.loading = false;
+    }
+  },
+  data(){
+    return {
+      selectedCourse: null,
+      loading: true
+    }
   },
 };
 </script>
@@ -47,17 +67,17 @@ body {
   padding: 20px;
 }
 
-.header {
-  background-color: #4caf50;
-  color: white;
-  width: 110%;
-  padding: 15px;
-  text-align: center;
-  margin-bottom: 20px;
+.scroller {
+  overflow-y: auto;
+  height: 85vh;
+  margin-right: -100px;
 }
 
+
 .p-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 0; /* Remove the gap between columns */
+
 }
 </style>

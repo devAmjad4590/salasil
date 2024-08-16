@@ -5,11 +5,11 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      <div v-for="episode in episodes" :key="episode.id" class="card">
-        <p class="episode">{{ episode.id }}</p>
-        <p>{{ episode.description }}</p>
-        <p class="time">٢٠د</p>
+      <div v-for="(episode, index) in episodes" :key="index" class="card">
+        <p class="episode">{{ index + 1}}</p>
+        <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
+          <p class="time flex-left">{{ episode["مدة"] }}</p>
           <IconClockHour9Filled size="32" color="black" />
         </span>
       </div>
@@ -23,32 +23,25 @@ import { IconClockHour9Filled } from "@tabler/icons-vue";
 export default {
   data() {
     return {
-      episodes: [
-        {
-          id: "١",
-          description:
-            "فهم | سلسلة تذوق العبادات - (4) الذكر | 42 فاه | مع د. أحمد العربي",
-        },
-        {
-          id: "٢",
-          description:
-            "فهم | سلسلة تذوق العبادات - (4) الذكر | 42 فاه | مع د. أحمد العربي",
-        },
-        {
-          id: "٣",
-          description:
-            "فهم | سلسلة تذوق العبادات - (4) الذكر | 42 فاه | مع د. أحمد العربي",
-        },
-        {
-          id: "٤",
-          description:
-            "فهم | سلسلة تذوق العبادات - (4) الذكر | 42 فاه | مع د. أحمد العربي",
-        },
-      ],
+      episodes: this.course["الفيديوهات"],
     };
   },
   components: {
     IconClockHour9Filled,
+  },
+  props: {
+    course: {
+      type: Object,
+      required: true,
+      default: () => ({})
+    },
+    
+  },
+  methods: {
+    truncatedText(text) {
+      return text.length > 97 ? text.slice(0, 97) + "..." : text;
+
+    },
   },
 };
 </script>
@@ -59,16 +52,13 @@ export default {
   display: flex;
   flex-direction: column;
 
-  grid-gap: px;
-  width: 150%;
-  padding: 0;
+  width: 100%;
 
   background-color: #fff;
   padding: 20px;
   margin-left: -30px;
-  margin-right: 0;
   border-radius: 0px;
-  margin-top: -20px;
+  margin-top: -17px;
 }
 
 .date {
@@ -85,6 +75,8 @@ export default {
   box-shadow: 0 0 1px 1px black;
   height: 60px;
 }
+
+
 
 .left {
   display: flex;
@@ -107,14 +99,17 @@ export default {
 .card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   height: 60px;
   border-bottom: 1px solid #eee;
   line-height: 0;
   border-radius: 5px;
   box-shadow: 0 0 1px 1px black;
-  text-align: center;
+  width: 100%; /* Ensure the card takes full width */
+
 }
+
+
 
 .card:last-child {
   border-bottom: none;
@@ -122,8 +117,16 @@ export default {
 
 .time {
   font-size: 18px;
-  margin-left: 10px;
-  margin-right: 200px;
+  margin-top: 15px;
+  margin-left: 5px;
+
+}
+
+.episode-title{
+  text-align: right;
+  margin-right: 20px;
+  flex: 1; /* Allow the title to take available space */
+
 }
 
 .episode {
@@ -131,18 +134,17 @@ export default {
   color: #b30000;
   justify-items: first baseline;
   margin-right: 20px;
-  margin-left: -75px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: bold;
 }
 
 .list-box {
   display: grid;
-  justify-items: auto;
 }
 
 .icon-wrapper {
-  margin-right: -107px;
-  margin-left: 30px;
+  margin-right: 20px;
+  margin-left: 25px;
+  display: flex;
 }
 </style>
