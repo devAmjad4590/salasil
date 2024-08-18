@@ -6,7 +6,7 @@
       <div class="p-container">
         <MainContent v-if="!loading" :course="selectedCourse" ></MainContent>
         <div class="scroller">
-        <Sidebar class="pa-4 "  v-if="!loading" :course="selectedCourse" ></Sidebar>
+        <Sidebar   v-if="!loading" :course="selectedCourse" ></Sidebar>
       </div>
       </div>
     </div>
