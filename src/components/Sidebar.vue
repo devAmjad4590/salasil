@@ -23,8 +23,8 @@
           <IconClockHour9Filled size="32" color="black" />
         </span>
       </v-card>
-      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       episodes: this.course["الفيديوهات"],
-      isChecked: false,
     };
   },
   components: {
@@ -44,14 +43,15 @@ export default {
     course: {
       type: Object,
       required: true,
-      default: () => ({})
+      default: () => ({}),
     },
-    
   },
   methods: {
     truncatedText(text) {
       return text.length > 97 ? text.slice(0, 97) + "..." : text;
-
+    },
+    handleClick() {
+      this.$emit("course-selected");
     },
   },
 };
@@ -62,9 +62,7 @@ export default {
   display: grid;
   display: flex;
   flex-direction: column;
-
   width: 100%;
-
 }
 
 .date {
@@ -81,8 +79,6 @@ export default {
   box-shadow: 0 0 1px 1px black;
   height: 60px;
 }
-
-
 
 .left {
   display: flex;
@@ -112,10 +108,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 0 1px 1px black;
   width: 100%; /* Ensure the card takes full width */
-
 }
-
-
 
 .card:last-child {
   border-bottom: none;
@@ -125,14 +118,12 @@ export default {
   font-size: 18px;
   margin-top: 15px;
   margin-left: 5px;
-
 }
 
-.episode-title{
+.episode-title {
   text-align: right;
   margin-right: 20px;
   flex: 1; /* Allow the title to take available space */
-
 }
 
 .episode {
@@ -146,50 +137,12 @@ export default {
 
 .list-box {
   display: grid;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow to the image */
 }
 
 .icon-wrapper {
   margin-right: 20px;
   margin-left: 25px;
   display: flex;
-}
-.checkmark {
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid black;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 30px;
-}
-
-.checkmark.checked {
-  background-color: lightgreen;
-  border-color: green;
-}
-
-.checkmark::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  transform: rotate(45deg);
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.checkmark.checked::after {
-  width: 25px;
-  height: 45px;
-  border-right: 5px solid green;
-  border-bottom: 5px solid green;
-  opacity: 1;
 }
 </style>
