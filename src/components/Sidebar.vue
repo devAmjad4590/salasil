@@ -5,14 +5,24 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      <div v-for="(episode, index) in episodes" :key="index" class="card">
-        <p class="episode">{{ index + 1}}</p>
+      <v-card
+        link
+        v-for="(episode, index) in episodes"
+        :key="index"
+        class="card"
+        :to="{
+          name: 'VideoPlayer',
+          params: {playlistId: course['معرف قائمة التشغيل'], videoId: episode['معرف الفيديو']}
+        }"
+        @click="handleClick"
+      >
+        <p class="episode">{{ index + 1 }}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
           <p class="time flex-left">{{ episode["مدة"] }}</p>
           <IconClockHour9Filled size="32" color="black" />
         </span>
-      </div>
+      </v-card>
     </div>
   </div>
 </template>
@@ -33,14 +43,15 @@ export default {
     course: {
       type: Object,
       required: true,
-      default: () => ({})
+      default: () => ({}),
     },
-    
   },
   methods: {
     truncatedText(text) {
       return text.length > 97 ? text.slice(0, 97) + "..." : text;
-
+    },
+    handleClick() {
+      this.$emit("course-selected");
     },
   },
 };
@@ -51,14 +62,7 @@ export default {
   display: grid;
   display: flex;
   flex-direction: column;
-
   width: 100%;
-
-  background-color: #fff;
-  padding: 20px;
-  margin-left: -30px;
-  border-radius: 0px;
-  margin-top: -17px;
 }
 
 .date {
@@ -66,7 +70,7 @@ export default {
 
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #D9D9D9;
   padding: 0;
   margin: 0;
   gap: 0;
@@ -75,8 +79,6 @@ export default {
   box-shadow: 0 0 1px 1px black;
   height: 60px;
 }
-
-
 
 .left {
   display: flex;
@@ -106,10 +108,7 @@ export default {
   border-radius: 5px;
   box-shadow: 0 0 1px 1px black;
   width: 100%; /* Ensure the card takes full width */
-
 }
-
-
 
 .card:last-child {
   border-bottom: none;
@@ -119,14 +118,12 @@ export default {
   font-size: 18px;
   margin-top: 15px;
   margin-left: 5px;
-
 }
 
-.episode-title{
+.episode-title {
   text-align: right;
   margin-right: 20px;
   flex: 1; /* Allow the title to take available space */
-
 }
 
 .episode {
@@ -140,6 +137,7 @@ export default {
 
 .list-box {
   display: grid;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow to the image */
 }
 
 .icon-wrapper {
