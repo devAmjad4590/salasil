@@ -55,42 +55,4 @@ export default {
   margin-left: 10px;
   margin-right: -19px;
 }
-
-.checkmark {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid black;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.checkmark.checked {
-  background-color: lightgreen;
-  border-color: green;
-}
-
-.checkmark::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  transform: rotate(45deg);
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.checkmark.checked::after {
-  width: 25px;
-  height: 45px;
-  border-right: 5px solid green;
-  border-bottom: 5px solid green;
-  opacity: 1;
-}
 </style>
