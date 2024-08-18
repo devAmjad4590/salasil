@@ -6,7 +6,7 @@
     </div>
     <div class="list-box">
       <div v-for="(episode, index) in episodes" :key="index" class="card">
-        <p class="episode">{{ index + 1}}</p>
+        <p class="episode">{{ index + 1 }}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
           <p class="time flex-left">{{ episode["مدة"] }}</p>
@@ -16,7 +16,7 @@
             @click="toggleCheck"
           ></div>
         </span>
-      </v-card>
+      </div>
     </div>
   </div>
 </template>
@@ -44,7 +44,6 @@ export default {
   methods: {
     truncatedText(text) {
       return text.length > 97 ? text.slice(0, 97) + "..." : text;
-
     },
   },
 };
@@ -63,7 +62,7 @@ export default {
 
   justify-content: space-between;
   align-items: center;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   padding: 0;
   margin: 0;
   gap: 0;

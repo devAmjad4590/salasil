@@ -1,7 +1,7 @@
 <template>
-      <NavBar :button="false"></NavBar>
+  <NavBar :button="false"></NavBar>
   <div class="p-container">
-    <h1 v-if="this.error" >انت زول عوير ولا شنو؟ داير شنو يا مكنه</h1>
+    <h1 v-if="this.error">انت زول عوير ولا شنو؟ داير شنو يا مكنه</h1>
     <iframe
       v-if="!this.loading"
       width="100%"
@@ -12,8 +12,14 @@
     >
     </iframe>
 
-      <Sidebar @course-selected="fetchCourse" v-if="!this.loading && !this.error" :course="selectedCourse" class="video-bar"> </Sidebar>
-    </div>
+    <Sidebar
+      @course-selected="fetchCourse"
+      v-if="!this.loading && !this.error"
+      :course="selectedCourse"
+      class="video-bar"
+    >
+    </Sidebar>
+  </div>
 </template>
 
 <script>
@@ -41,32 +47,37 @@ export default {
   methods: {
     toggleCheck() {
       this.isChecked = !this.isChecked;
-      console.log(videoId)
+      console.log(videoId);
     },
-    async fetchCourse(){      
+    async fetchCourse() {
       window.scrollTo(0, 0);
       try {
-        const response = await fetch('/db/salasil.json');
+        const response = await fetch("/db/salasil.json");
         const data = await response.json();
-        this.selectedCourse = await data.courses.find(course => course['معرف قائمة التشغيل'] == this.$route.params.playlistId);
-        this.selectedVideo = await this.selectedCourse['الفيديوهات'].find(video => video['معرف الفيديو'] == this.$route.params.videoId);
-        if(this.selectedVideo){
-          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo['معرف الفيديو']}?rel=0&modestbranding=1&controls=1&showinfo=1`;        }
-        else{
+        this.selectedCourse = await data.courses.find(
+          (course) =>
+            course["معرف قائمة التشغيل"] == this.$route.params.playlistId
+        );
+        this.selectedVideo = await this.selectedCourse["الفيديوهات"].find(
+          (video) => video["معرف الفيديو"] == this.$route.params.videoId
+        );
+        if (this.selectedVideo) {
+          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo["معرف الفيديو"]}?rel=0&modestbranding=1&controls=1&showinfo=1`;
+        } else {
           this.error = true;
         }
       } catch (error) {
         console.error("Error fetching course data:", error);
-      } finally{
+      } finally {
         this.loading = false;
       }
-    }
+    },
   },
 
   components: {
     MainContent,
     Sidebar,
-    NavBar
+    NavBar,
   },
 };
 </script>
@@ -78,7 +89,7 @@ export default {
   flex-direction: column;
 }
 
-.video-bar{
+.video-bar {
   margin-left: 0.5px;
   margin-right: 0.5px;
 }
@@ -89,8 +100,6 @@ export default {
   margin-left: 10px;
   margin-right: -19px;
 }
-<<<<<<< HEAD
-=======
 
 .checkmark {
   width: 50px;
@@ -128,5 +137,4 @@ export default {
   border-bottom: 5px solid green;
   opacity: 1;
 }
->>>>>>> 8652339ddc322c050be7c7cde3bb2754d73c9402
 </style>
