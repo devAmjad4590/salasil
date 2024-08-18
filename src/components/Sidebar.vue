@@ -5,16 +5,22 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      <v-card v-for="(episode, index) in episodes" :key="index" class="card">
-        <p class="episode">{{ index + 1}}</p>
+      <v-card
+        link
+        v-for="(episode, index) in episodes"
+        :key="index"
+        class="card"
+        :to="{
+          name: 'VideoPlayer',
+          params: {playlistId: course['معرف قائمة التشغيل'], videoId: episode['معرف الفيديو']}
+        }"
+        @click="handleClick"
+      >
+        <p class="episode">{{ index + 1 }}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
           <p class="time flex-left">{{ episode["مدة"] }}</p>
           <IconClockHour9Filled size="32" color="black" />
-          <div
-            :class="['checkmark', { checked: isChecked }]"
-            @click="toggleCheck"
-          ></div>
         </span>
       </v-card>
       </div>
@@ -59,11 +65,6 @@ export default {
 
   width: 100%;
 
-  background-color: #fff;
-  padding: 20px;
-  margin-left: -30px;
-  border-radius: 0px;
-  margin-top: -17px;
 }
 
 .date {
@@ -71,7 +72,7 @@ export default {
 
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #D9D9D9;
   padding: 0;
   margin: 0;
   gap: 0;
@@ -145,6 +146,7 @@ export default {
 
 .list-box {
   display: grid;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .icon-wrapper {
