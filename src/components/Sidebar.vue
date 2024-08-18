@@ -6,7 +6,7 @@
     </div>
     <div class="list-box">
       <div v-for="(episode, index) in episodes" :key="index" class="card">
-        <p class="episode">{{ index + 1 }}</p>
+        <p class="episode">{{ index + 1}}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
           <p class="time flex-left">{{ episode["مدة"] }}</p>
@@ -16,7 +16,7 @@
             @click="toggleCheck"
           ></div>
         </span>
-      </div>
+      </v-card>
     </div>
   </div>
 </template>
@@ -44,9 +44,7 @@ export default {
   methods: {
     truncatedText(text) {
       return text.length > 97 ? text.slice(0, 97) + "..." : text;
-      // toggleCheck() {
-      //   this.isChecked = !this.isChecked;
-      //   },
+
     },
   },
 };
@@ -57,14 +55,7 @@ export default {
   display: grid;
   display: flex;
   flex-direction: column;
-
   width: 100%;
-
-  background-color: #fff;
-  padding: 20px;
-  margin-left: -30px;
-  border-radius: 0px;
-  margin-top: -17px;
 }
 
 .date {
@@ -72,7 +63,7 @@ export default {
 
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #D9D9D9;
   padding: 0;
   margin: 0;
   gap: 0;
@@ -139,6 +130,7 @@ export default {
 
 .list-box {
   display: grid;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow to the image */
 }
 
 .icon-wrapper {
