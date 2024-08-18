@@ -89,8 +89,6 @@ export default {
   margin-left: 10px;
   margin-right: -19px;
 }
-<<<<<<< HEAD
-=======
 
 .checkmark {
   width: 50px;
@@ -128,5 +126,4 @@ export default {
   border-bottom: 5px solid green;
   opacity: 1;
 }
->>>>>>> 8652339ddc322c050be7c7cde3bb2754d73c9402
 </style>

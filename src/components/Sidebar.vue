@@ -5,7 +5,7 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      <div v-for="(episode, index) in episodes" :key="index" class="card">
+      <v-card v-for="(episode, index) in episodes" :key="index" class="card">
         <p class="episode">{{ index + 1}}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
         <span class="icon-wrapper">
@@ -17,8 +17,8 @@
           ></div>
         </span>
       </v-card>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
