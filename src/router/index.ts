@@ -2,7 +2,6 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../pages/Home.vue';
 import Playlist from '../pages/Playlist.vue'
 import VideoPlayer from '../pages/VideoPlayer.vue'
-import { process } from '@tauri-apps/api';
 
 const routes = [
     {

@@ -9,7 +9,9 @@
           v-for="course in filtreredCourses"
           :key="course['معرف قائمة التشغيل']"
           class="pa-6"
-          sm="4"
+          xs="12"
+          md="4"
+          xl="3"
         >
           <Card :course="course"></Card>
         </v-col>

@@ -1,11 +1,10 @@
 <template>
-  <NavBar :button="false"></NavBar>
+  <NavBar :back="true" :button="false" @back="goBack"></NavBar>
 <div class="p-container">
 <h1 v-if="this.error" >انت زول عوير ولا شنو؟ داير شنو يا مكنه</h1>
 <iframe
   v-if="!this.loading"
-  width="100%"
-  height="620"
+  class="video-frame"
   :src="videoLink"
   allowfullscreen
   frameborder="0"
@@ -60,6 +59,9 @@ async fetchCourse(){
   } finally{
     this.loading = false;
   }
+},
+goBack(){
+    this.$router.push("/playlist/" + this.$route.params.playlistId);
 }
 },
 
@@ -79,6 +81,7 @@ flex-direction: column;
 }
 
 .video-bar{
+
 margin-left: 0.5px;
 margin-right: 0.5px;
 }
@@ -88,6 +91,15 @@ display: flex;
 justify-content: space-between;
 margin-left: 10px;
 margin-right: -19px;
+}
+
+.video-frame{
+  width: 100%;
+  min-height: 75vh;
+  max-height: 86vh;
+  aspect-ratio: 16/9;
+
+
 }
 
 .checkmark {
