@@ -5,18 +5,15 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      <div v-for="(episode, index) in episodes" :key="index" class="card">
-        <p class="episode">{{ index + 1 }}</p>
-        <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
-        <span class="icon-wrapper">
-          <p class="time flex-left">{{ episode["مدة"] }}</p>
-          <IconClockHour9Filled size="32" color="black" />
-          <div
-            :class="['checkmark', { checked: isChecked }]"
-            @click="toggleCheck"
-          ></div>
-        </span>
-      </div>
+      link v-for="(episode, index) in episodes" :key="index" class="card" :to="{
+      name: 'VideoPlayer', params: {playlistId: course['معرف قائمة التشغيل'],
+      videoId: episode['معرف الفيديو']} }" @click="handleClick" >
+      <p class="episode">{{ index + 1 }}</p>
+      <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
+      <span class="icon-wrapper">
+        <p class="time flex-left">{{ episode["مدة"] }}</p>
+        <IconClockHour9Filled size="32" color="black" />
+      </span>
     </div>
   </div>
 </template>
@@ -28,7 +25,6 @@ export default {
   data() {
     return {
       episodes: this.course["الفيديوهات"],
-      isChecked: false,
     };
   },
   components: {
@@ -44,6 +40,9 @@ export default {
   methods: {
     truncatedText(text) {
       return text.length > 97 ? text.slice(0, 97) + "..." : text;
+    },
+    handleClick() {
+      this.$emit("course-selected");
     },
   },
 };
@@ -136,43 +135,5 @@ export default {
   margin-right: 20px;
   margin-left: 25px;
   display: flex;
-}
-.checkmark {
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid black;
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 30px;
-}
-
-.checkmark.checked {
-  background-color: lightgreen;
-  border-color: green;
-}
-
-.checkmark::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  transform: rotate(45deg);
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.checkmark.checked::after {
-  width: 25px;
-  height: 45px;
-  border-right: 5px solid green;
-  border-bottom: 5px solid green;
-  opacity: 1;
 }
 </style>
