@@ -19,7 +19,7 @@
         }"
         @click="handleClick"
       >
-        <p class="episode">{{ index + "2" }}</p>
+        <p class="episode">{{ index + 1 }}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
 
         <span class="icon-wrapper">
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     truncatedText(text) {
-      return text.length > "٩٧" ? text.slice("٩٧", "٠") + "..." : text;
+      return text.length > 97 ? text.slice(0, 97) + "....." : text;
     },
 
     toggleCheck() {
