@@ -4,10 +4,14 @@
       <NavBar :button="false"></NavBar>
 
       <div class="p-container">
-        <MainContent v-if="!loading" :course="selectedCourse" ></MainContent>
+        <MainContent v-if="!loading" :course="selectedCourse"></MainContent>
         <div class="scroller">
-        <Sidebar class="pa-4 "  v-if="!loading" :course="selectedCourse" ></Sidebar>
-      </div>
+          <Sidebar
+            class="pa-4"
+            v-if="!loading"
+            :course="selectedCourse"
+          ></Sidebar>
+        </div>
       </div>
     </div>
   </div>
@@ -26,23 +30,25 @@ export default {
     MainContent,
     NavBar,
   },
-  async created(){
+  async created() {
     const courseId = this.$route.params.id;
     try {
-      const response = await fetch('/db/salasil.json');
+      const response = await fetch("/db/salasil.json");
       const data = await response.json();
-      this.selectedCourse = await data.courses.find(course => course['معرف قائمة التشغيل'] == courseId);
+      this.selectedCourse = await data.courses.find(
+        (course) => course["معرف قائمة التشغيل"] == courseId
+      );
     } catch (error) {
       console.error("Error fetching course data:", error);
-    } finally{
+    } finally {
       this.loading = false;
     }
   },
-  data(){
+  data() {
     return {
       selectedCourse: null,
-      loading: true
-    }
+      loading: true,
+    };
   },
 };
 </script>
@@ -73,11 +79,9 @@ body {
   margin-right: -100px;
 }
 
-
 .p-container {
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 0; /* Remove the gap between columns */
-
 }
 </style>

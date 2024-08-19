@@ -5,15 +5,33 @@
       <p class="left">تاريخ البدء: 2024/2/2</p>
     </div>
     <div class="list-box">
-      link v-for="(episode, index) in episodes" :key="index" class="card" :to="{
-      name: 'VideoPlayer', params: {playlistId: course['معرف قائمة التشغيل'],
-      videoId: episode['معرف الفيديو']} }" @click="handleClick" >
-      <p class="episode">{{ index + 1 }}</p>
-      <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
-      <span class="icon-wrapper">
-        <p class="time flex-left">{{ episode["مدة"] }}</p>
-        <IconClockHour9Filled size="32" color="black" />
-      </span>
+      <v-card
+        link
+        v-for="(episode, index) in episodes"
+        :key="index"
+        class="card"
+        :to="{
+          name: 'VideoPlayer',
+          params: {
+            playlistId: course['معرف قائمة التشغيل'],
+            videoId: episode['معرف الفيديو'],
+          },
+        }"
+        @click="handleClick"
+      >
+        <p class="episode">{{ index + "2" }}</p>
+        <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
+
+        <span class="icon-wrapper">
+          <p class="time flex-left">{{ episode["مدة"] }}</p>
+
+          <IconClockHour9Filled size="32" color="black" />
+          <div
+            :class="['checkmark', { checked: isChecked }]"
+            @click="toggleCheck"
+          ></div>
+        </span>
+      </v-card>
     </div>
   </div>
 </template>
@@ -22,8 +40,19 @@
 import { IconClockHour9Filled } from "@tabler/icons-vue";
 
 export default {
+  name: "CheckmarkCheckbox",
+
   data() {
     return {
+      isChecked: false,
+      videoId: null,
+      videoLink: null,
+      playlistId: null,
+      selectedCourse: null,
+      selectedVideo: null,
+      loading: true,
+      error: false,
+
       episodes: this.course["الفيديوهات"],
     };
   },
@@ -39,11 +68,16 @@ export default {
   },
   methods: {
     truncatedText(text) {
-      return text.length > 97 ? text.slice(0, 97) + "..." : text;
+      return text.length > "٩٧" ? text.slice("٩٧", "٠") + "..." : text;
     },
-    handleClick() {
-      this.$emit("course-selected");
+
+    toggleCheck() {
+      this.isChecked = !this.isChecked;
     },
+  },
+
+  handleClick() {
+    this.$emit("course-selected");
   },
 };
 </script>
@@ -135,5 +169,43 @@ export default {
   margin-right: 20px;
   margin-left: 25px;
   display: flex;
+}
+
+.checkmark {
+  margin-right: 20px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid black;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark.checked {
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.checkmark::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  transform: rotate(45deg);
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.checkmark.checked::after {
+  width: 10px;
+  height: 27px;
+  border-right: 5px solid green;
+  border-bottom: 5px solid green;
+  opacity: 1;
 }
 </style>
