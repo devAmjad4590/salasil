@@ -1,8 +1,7 @@
 <template>
-  <NavBar :back="true" :button="false" @back="goHome" ></NavBar>
+  <NavBar :back="true" :button="false" @back="goHome"></NavBar>
   <div class="container">
     <div>
-
       <div class="p-container">
         <MainContent v-if="!loading" :course="selectedCourse"></MainContent>
         <div class="scroller">
@@ -25,9 +24,9 @@ import NavBar from "../components/NavBar.vue";
 export default {
   name: "playlist",
   methods: {
-    goHome(){
-      this.$router.push('/');
-    }
+    goHome() {
+      this.$router.push("/");
+    },
   },
   components: {
     Sidebar,
@@ -54,7 +53,6 @@ export default {
       loading: true,
     };
   },
-  
 };
 </script>
 
