@@ -4,10 +4,13 @@
       <IconMenu2 v-if="button" size="35" color="white" />
     </v-app-bar-nav-icon>
     <v-spacer></v-spacer>
-    <router-link to="/" class="title-link">
+    <router-link to="/" class="title-link" @click="handleTitleClick">
       <h1 class="title">سلاسل</h1>
     </router-link>
     <v-spacer></v-spacer>
+    <v-app-bar-nav-icon class="ml-3">
+      <IconArrowBack v-if="back" @click="$emit('back')"  size="35" color="white" />
+    </v-app-bar-nav-icon>
   </v-app-bar>
   <v-navigation-drawer
     v-if="button"
@@ -104,7 +107,7 @@
 </template>
 
 <script>
-import { IconMenu2 } from "@tabler/icons-vue";
+import { IconMenu2, IconArrowBack } from "@tabler/icons-vue";
 import CustomCheckbox from "./CustomCheckBox.vue";
 import { set, get } from "../db";
 export default {
@@ -124,6 +127,7 @@ export default {
   components: {
     IconMenu2,
     CustomCheckbox,
+    IconArrowBack,
   },
   computed: {
     displayedCategories() {
@@ -135,10 +139,19 @@ export default {
 
   props: {
     button: Boolean,
+    back: Boolean
   },
   methods: {
     showMoreCategories() {
       this.showAllCategories = !this.showAllCategories;
+    },
+    handleTitleClick(event) {
+      if (this.$route.path === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        event.preventDefault();
+      } else {
+        this.$router.push('/');
+      }
     },
     handleChange() {
       set({

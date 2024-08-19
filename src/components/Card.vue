@@ -23,10 +23,8 @@
         rounded
       />
       <div class="overlay">
-        <div class="rectangle">
-          <span class="rectangle-text"
-            >{{ this.course["عدد الحلقات"] }} حلقات</span
-          >
+        <div class="rectangle" :style="{ width: rectangleWidth }">
+          <span class="rectangle-text">{{ formattedDuration }}</span>
         </div>
       </div>
     </div>
@@ -51,6 +49,34 @@ export default {
         ? words.slice(0, 20).join(" ") + "..."
         : this.course["وصف مختصر"];
     },
+    formattedDuration() {
+      const duration = this.course["المدة الإجمالية (بالساعات)"];
+      const hours = parseFloat(duration.split(":")[0]);
+      if(hours < 1){
+        return "اقل من ساعة";
+      }
+      else if(hours == 2){
+        return "ساعتين";
+      }
+      else{
+        return `${hours} ساعات`;
+      }
+    },
+    rectangleWidth() {
+      const duration = this.course["المدة الإجمالية (بالساعات)"];
+      const hours = parseFloat(duration.split(":")[0]);
+      if (hours < 1) {
+        return "119px";
+      } 
+      else if(hours == 2){
+        return "80px"
+      }
+      else if (hours >= 10 && hours <= 99) {
+        return "95px";
+      } else if (hours > 100){
+        return "100px";
+      }
+    },
   },
 };
 </script>
@@ -73,7 +99,6 @@ export default {
 .rectangle {
   background-color: #990000;
   padding: 1.9px 14px;
-  width: 102px;
   height: 29px;
   border-radius: 3px;
 }
