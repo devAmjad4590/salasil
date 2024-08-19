@@ -5,8 +5,8 @@
       <v-img 
       class=""
       aspect-ratio="4/3"
-      height="227"
-      width="590"
+      height="30vh"
+      width="30vw"
       cover
       rounded="lg"
       :src="this.course['الفيديوهات'][0]['صورة مصغرة']"
