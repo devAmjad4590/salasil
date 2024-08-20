@@ -72,6 +72,7 @@ export default {
     updateFilters() {
       this.filters = get().filters;
     },
+    
   },
   computed: {
     filtreredCourses() {

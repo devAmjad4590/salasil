@@ -19,11 +19,11 @@
         }"
         @click="handleClick"
       >
-        <p class="episode">{{ index + 1 }}</p>
+        <p class="episode">{{ toArabic(index + 1) }}</p>
         <p class="episode-title">{{ truncatedText(episode["عنوان"]) }}</p>
 
         <span class="icon-wrapper">
-          <p class="time flex-left">{{ episode["مدة"] }}</p>
+          <p class="time flex-left">{{ formatDuration(episode["مدة"]) }}</p>
 
           <IconClockHour9Filled size="32" color="black" />
           <div
@@ -74,10 +74,41 @@ export default {
     toggleCheck() {
       this.isChecked = !this.isChecked;
     },
+    
+      handleClick() {
+        this.$emit("course-selected");
+      },
+      formatDuration(duration) {
+    console.log("Duration input:", duration);
+    const parts = duration.split(":").map(Number);
+    let hours = 0, minutes = 0, seconds = 0;
+
+    if (parts.length === 2) {
+      [minutes, seconds] = parts;
+    } else if (parts.length === 3) {
+      [hours, minutes, seconds] = parts;
+    }
+
+    console.log("Parsed values:", { hours, minutes, seconds });
+
+    const totalMinutes = hours * 60 + minutes + seconds / 60;
+    console.log("Total minutes:", totalMinutes);
+
+    const toArabicNumerals = (num) => {
+      return num.toString().replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+    };
+
+    if (totalMinutes >= 60) {
+      const totalHours = Math.floor(totalMinutes / 60);
+      return `${toArabicNumerals(totalHours)}س`;
+    } else {
+      return `${toArabicNumerals(Math.floor(totalMinutes))}د`;
+    }
   },
 
-  handleClick() {
-    this.$emit("course-selected");
+  toArabic(num){
+    return num.toString().replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+  }
   },
 };
 </script>

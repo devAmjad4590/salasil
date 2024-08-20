@@ -35,7 +35,7 @@
       </p>
       <p>
         <strong><span class="label">المدة:</span></strong>
-        <span class="value">{{ this.course['المدة الإجمالية (بالساعات)'] }}</span>
+        <span class="value">{{ convertToArabicNumerals(this.course['المدة الإجمالية (بالساعات)']) }}</span>
       </p>
       <p>
         <strong><span class="label">التاريخ:</span></strong>
@@ -76,6 +76,12 @@ export default {
     },
     
   },
+  methods:{
+    convertToArabicNumerals(str){
+      return str.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+
+    }
+  }
 
   
   
