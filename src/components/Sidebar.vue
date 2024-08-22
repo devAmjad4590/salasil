@@ -74,41 +74,43 @@ export default {
     toggleCheck() {
       this.isChecked = !this.isChecked;
     },
-    
-      handleClick() {
-        this.$emit("course-selected");
-      },
-      formatDuration(duration) {
-    console.log("Duration input:", duration);
-    const parts = duration.split(":").map(Number);
-    let hours = 0, minutes = 0, seconds = 0;
 
-    if (parts.length === 2) {
-      [minutes, seconds] = parts;
-    } else if (parts.length === 3) {
-      [hours, minutes, seconds] = parts;
-    }
+    handleClick() {
+      this.$emit("course-selected");
+    },
+    formatDuration(duration) {
+      console.log("Duration input:", duration);
+      const parts = duration.split(":").map(Number);
+      let hours = 0,
+        minutes = 0,
+        seconds = 0;
 
-    console.log("Parsed values:", { hours, minutes, seconds });
+      if (parts.length === 2) {
+        [minutes, seconds] = parts;
+      } else if (parts.length === 3) {
+        [hours, minutes, seconds] = parts;
+      }
 
-    const totalMinutes = hours * 60 + minutes + seconds / 60;
-    console.log("Total minutes:", totalMinutes);
+      console.log("Parsed values:", { hours, minutes, seconds });
 
-    const toArabicNumerals = (num) => {
-      return num.toString().replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
-    };
+      const totalMinutes = hours * 60 + minutes + seconds / 60;
+      console.log("Total minutes:", totalMinutes);
 
-    if (totalMinutes >= 60) {
-      const totalHours = Math.floor(totalMinutes / 60);
-      return `${toArabicNumerals(totalHours)}س`;
-    } else {
-      return `${toArabicNumerals(Math.floor(totalMinutes))}د`;
-    }
-  },
+      const toArabicNumerals = (num) => {
+        return num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+      };
 
-  toArabic(num){
-    return num.toString().replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
-  }
+      if (totalMinutes >= 60) {
+        const totalHours = Math.floor(totalMinutes / 60);
+        return `${toArabicNumerals(totalHours)}س`;
+      } else {
+        return `${toArabicNumerals(Math.floor(totalMinutes))}د`;
+      }
+    },
+
+    toArabic(num) {
+      return num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+    },
   },
 };
 </script>
