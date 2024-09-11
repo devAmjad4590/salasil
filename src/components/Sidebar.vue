@@ -79,7 +79,6 @@ export default {
         this.$emit("course-selected");
       },
       formatDuration(duration) {
-    console.log("Duration input:", duration);
     const parts = duration.split(":").map(Number);
     let hours = 0, minutes = 0, seconds = 0;
 
@@ -89,10 +88,8 @@ export default {
       [hours, minutes, seconds] = parts;
     }
 
-    console.log("Parsed values:", { hours, minutes, seconds });
 
     const totalMinutes = hours * 60 + minutes + seconds / 60;
-    console.log("Total minutes:", totalMinutes);
 
     const toArabicNumerals = (num) => {
       return num.toString().replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);

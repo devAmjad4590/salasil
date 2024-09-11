@@ -28,7 +28,7 @@
       v-model="sorting"
       @update:modelValue="handleChange"
     ></v-select>
-    <h3 class="drawer-title">غربلة</h3>
+    <h3 class="drawer-title">فلتر</h3>
     <h4 class="mt-5 drawer-subtitle">اللغة</h4>
     <h5 class="mt-3 drawer-subtitle2">اللغة المسموعة</h5>
 
@@ -117,7 +117,7 @@ export default {
       available_languages: ["English", "العربية"],
       categories: ["فقه", "دعوة", "حديث", "تفسير", "وثائقيات"],
       اللغات_المقروءة: [],
-      اللغة_المسموعة: "العربية",
+      اللغة_المسموعة: "",
       التصنيف: [],
       showAllCategories: false,
       sorting: "الاقصر",

@@ -51,6 +51,10 @@ export default {
             return course;
           })
           .sort((a, b) => a.المدة - b.المدة); // Sort courses by duration from short to long
+          // initially filter courses to arabic
+
+
+
       });
   },
   data() {
@@ -90,12 +94,12 @@ export default {
           }
         }
 
-        // Filter by subtitle_languages
-        // if (this.filters.subtitle_languages && this.filters.subtitle_languages.length > 0) {
-        //     if (!this.filters.subtitle_languages.includes(course.اللغة)) {
-        //       return false;
-        //     }
-        //   }
+        // Filter by audio_language
+        if (this.filters.audio_language && this.filters.audio_language.length > 0) {
+            if (!this.filters.audio_language.includes(course.اللغة)) {
+              return false;
+            }
+          }
 
         // Filter by المدة
         const duration = this.filters.المدة || Number.POSITIVE_INFINITYs;
@@ -103,21 +107,17 @@ export default {
           return false;
         }
 
-        // if(this.filters.sorting === "الاقصر"){
-        //   course.sort((a, b) => a.المدة - b.المدة);
-        // } else if(this.filters.sorting === "الاطول"){
-        //   filteredCourses.sort((a, b) => b.المدة - a.المدة);
-        // }
-
         return true;
       });
 
-      // Sort the filtered courses
       if (this.filters.sorting === "الاقصر") {
         filteredCourses = filteredCourses.sort((a, b) => a.المدة - b.المدة);
       } else if (this.filters.sorting === "الاطول") {
         filteredCourses = filteredCourses.sort((a, b) => b.المدة - a.المدة);
+        
       }
+      
+      
 
       // return the user to the top page
       window.scrollTo(0, 0);
