@@ -50,7 +50,7 @@ export default {
       isChecked: false,
       videoId: null,
       videoLink: null,
-      playlistId: null,
+      playlistId: null, // hereeeeeeeeeeeeeeeeeee
       selectedCourse: null,
       selectedVideo: null,
       loading: true,
@@ -80,7 +80,8 @@ export default {
       this.player.httpSourceSelector();
 
       this.player.on('ended', () => {
-        alert('Video has ended!');
+        // const id = this.playlistId;
+       // here is the function mr nasr !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       })
     },
     destroyPlayer(){

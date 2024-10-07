@@ -1,0 +1,23 @@
+{
+    "courses": [
+      {
+        "c_index": 0,
+        "c_id": "nkil1U1GxdA",
+        "lastVideo": 3,
+        "completed": false
+      },
+      {
+        "c_index": 1,
+        "c_id": "si994Z9BAr8",
+        "lastVideo": 0,
+        "completed": false
+      },
+      {
+        "c_index": 2,
+        "c_id": "hK-9Be0prrA",
+        "lastVideo": 0,
+        "completed": false
+      }
+    ]
+  }
+  
