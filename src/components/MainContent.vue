@@ -52,14 +52,12 @@ import { components } from "vuetify/dist/vuetify-labs.js";
 export default {
   name: "MainContent",
   created(){
-    console.log(this.course)
+    // console.log(this.course)
   },
   computed: {
     formattedDate() {
       const date = new Date(this.course['تاريخ أول حلقة']);
       return new Intl.DateTimeFormat('ar-EG', {
-        weekday: 'long',
-        day: 'numeric',
         month: 'long',
         year: 'numeric'
       }).format(date);

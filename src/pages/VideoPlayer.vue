@@ -2,14 +2,11 @@
   <NavBar :back="true" :button="false" @back="goBack"></NavBar>
   <div class="p-container">
     <h1 v-if="this.error">انت زول عوير ولا شنو؟ داير شنو يا مكنه</h1>
-    <iframe
-      v-if="!this.loading"
-      class="video-frame"
-      :src="videoLink"
-      allowfullscreen
-      frameborder="0"
-    >
-    </iframe>
+    <div v-if="!this.loading" class="video-frame">
+      <video id="playerjs" class="video-js vjs-default-skin vjs-big-play-centered"
+      ></video>
+    </div>
+
 
     <Sidebar
       @course-selected="fetchCourse"
@@ -26,27 +23,71 @@ import MainContent from "../components/MainContent.vue";
 import Sidebar from "../components/Sidebar.vue";
 import NavBar from "../components/NavBar.vue";
 
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import 'videojs-youtube';
+import 'videojs-http-source-selector';
+
 export default {
   name: "playlist",
-  created() {
+  mounted(){
     this.fetchCourse();
+    setTimeout(() => {
+      this.initializePlayer();
+    }, 500);
   },
+  beforeDestroy(){
+    this.destroyPlayer();
+  },
+  watch: {
+    videoLink(newVal, oldVal){
+      if(newVal !== oldVal && oldVal !== null){
+        this.$router.go(0);
+    }
+  }},
   data() {
     return {
       isChecked: false,
       videoId: null,
       videoLink: null,
-      playlistId: null,
+      playlistId: null, // hereeeeeeeeeeeeeeeeeee
       selectedCourse: null,
       selectedVideo: null,
       loading: true,
       error: false,
+      player: null,
     };
   },
   methods: {
     toggleCheck() {
       this.isChecked = !this.isChecked;
-      console.log(videoId);
+    },
+    initializePlayer(){
+      if (this.player) {
+        this.player.dispose();
+      }
+      this.player = videojs(document.getElementById('playerjs'), {
+        techOrder: ['youtube'],
+        sources: [{
+          type: 'video/youtube',
+          src: this.videoLink
+        }],
+        controls: true,
+        playbackRates: [0.5, 1, 1.5, 2], // Speed settings
+      });
+
+      // Add quality selector plugin
+      this.player.httpSourceSelector();
+
+      this.player.on('ended', () => {
+        // const id = this.playlistId;
+       // here is the function mr nasr !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      })
+    },
+    destroyPlayer(){
+      if(this.player){
+        this.player.dispose();
+      }
     },
     async fetchCourse() {
       window.scrollTo(0, 0);
@@ -61,7 +102,7 @@ export default {
           (video) => video["معرف الفيديو"] == this.$route.params.videoId
         );
         if (this.selectedVideo) {
-          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo["معرف الفيديو"]}?rel=0&modestbranding=1&controls=1&showinfo=1`;
+          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo["معرف الفيديو"]}?rel=0&modestbranding=0&controls=1&showinfo=0&autoplay=0`;
         } else {
           this.error = true;
         }
@@ -105,9 +146,19 @@ export default {
 
 .video-frame {
   width: 100%;
-  min-height: 75vh;
-  max-height: 86vh;
+  height: 76vh;
   aspect-ratio: 16/9;
+}
+
+.vjs-big-play-centered .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.video-js {
+  width: 100%;
+  height: 100%;
 }
 
 .checkmark {

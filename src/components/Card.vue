@@ -44,22 +44,22 @@ export default {
   },
   computed: {
     truncatedText() {
-      const words = this.course["وصف مختصر"].split(" ");
-      return words.length > 20
-        ? words.slice(0, 20).join(" ") + "..."
-        : this.course["وصف مختصر"];
+      const description = this.course["وصف مختصر"];
+      return description.length > 150
+        ? description.substring(0, 140) + "..."
+        : description;
     },
     formattedDuration() {
       const duration = this.course["المدة الإجمالية (بالساعات)"];
       const hours = parseFloat(duration.split(":")[0]);
-      if(hours < 1){
+      if (hours < 1) {
         return "اقل من ساعة";
-      }
-      else if(hours == 2){
+      } else if (hours == 2) {
         return "ساعتين";
-      }
-      else{
+      } else if (hours <= 10 && hours > 2) {
         return `${hours} ساعات`;
+      } else {
+        return `${hours} ساعة`;
       }
     },
     rectangleWidth() {
@@ -67,13 +67,11 @@ export default {
       const hours = parseFloat(duration.split(":")[0]);
       if (hours < 1) {
         return "119px";
-      } 
-      else if(hours == 2){
-        return "80px"
-      }
-      else if (hours >= 10 && hours <= 99) {
-        return "95px";
-      } else if (hours > 100){
+      } else if (hours == 2) {
+        return "80px";
+      } else if (hours >= 10 && hours <= 99) {
+        return "85px";
+      } else if (hours > 100) {
         return "100px";
       }
     },

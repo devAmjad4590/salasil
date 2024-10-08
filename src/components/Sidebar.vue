@@ -1,12 +1,20 @@
 <template>
-  <div class="grid-sidebar">
-    <div class="date">
-      <p class="right">التقدم: ١/٤</p>
-      <p class="left">تاريخ البدء: 2024/2/2</p>
-    </div>
+  <v-card class="mx-auto" max-width="870">
+    <v-card-title class="bg-cyan-darken-1">
+      <p class="red--text text-h5">التقدم: ١/٤</p>
+    </v-card-title>
+    <v-col
+      v-for="course in filtreredCourses"
+      :key="course['معرف قائمة التشغيل']"
+      class="pa-6"
+      xs="12"
+      md="4"
+      xl="3"
+    >
+    </v-col>
+
     <div class="list-box">
       <v-card
-        link
         v-for="(episode, index) in episodes"
         :key="index"
         class="card"
@@ -17,6 +25,7 @@
             videoId: episode['معرف الفيديو'],
           },
         }"
+        link
         @click="handleClick"
       >
         <p class="episode">{{ toArabic(index + 1) }}</p>
@@ -28,12 +37,12 @@
           <IconClockHour9Filled size="32" color="black" />
           <div
             :class="['checkmark', { checked: isChecked }]"
-            @click="toggleCheck"
+            @click.stop="toggleCheck"
           ></div>
         </span>
       </v-card>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script>

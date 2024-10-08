@@ -12,6 +12,10 @@
   "dependencies": {
     "@tabler/icons-vue": "^3.11.0",
     "@tauri-apps/api": "^1",
+    "@videojs-player/vue": "^1.0.0",
+    "video.js": "^7.21.6",
+    "videojs-http-source-selector": "^1.1.6",
+    "videojs-youtube": "^3.0.1",
     "vue": "^3.3.4",
     "vue-router": "^4.4.0",
     "vuetify": "^3.6.13"
