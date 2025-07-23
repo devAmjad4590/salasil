@@ -1,6 +1,7 @@
 <template>
   <NavBar :back="true" :button="false" @back="goBack"></NavBar>
-  <div class="p-container">
+  <loading-spinner v-if="loading"></loading-spinner>
+  <div class="p-container" v-if="!loading">
     <h1 v-if="this.error">انت زول عوير ولا شنو؟ داير شنو يا مكنه</h1>
     <div v-if="!this.loading" class="video-frame">
       <video id="playerjs" class="video-js vjs-default-skin vjs-big-play-centered"
@@ -24,6 +25,7 @@
 import MainContent from "../components/MainContent.vue";
 import Sidebar from "../components/Sidebar.vue";
 import NavBar from "../components/NavBar.vue";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
@@ -149,6 +151,7 @@ export default {
     MainContent,
     Sidebar,
     NavBar,
+    LoadingSpinner,
   },
 };
 </script>
@@ -166,7 +169,7 @@ export default {
 
 .video-frame {
   width: 100%;
-  height: 75vh;
+  height: 94vh;
   aspect-ratio: 16/9;
 }
 

@@ -1,7 +1,10 @@
 <template>
   <v-card class="mx-auto" :max-width="fullWidth ? undefined : maxWidth">
     <v-card-title class="sidebar-header">
-      <p class="text-h5">التقدم: ١/٤</p>
+      <div class="header-content">
+        <p class="text-h5 mohtawiyat-title">محتويات السلسلة</p>
+        <p class="text-h5 taqadum-title">التقدم: {{ toArabic(completedEpisodesCount) }}/{{ toArabic(totalEpisodes) }}</p>
+      </div>
     </v-card-title>
 
     <v-col
@@ -91,6 +94,14 @@ export default {
     selectedVideoId: {
       type: String,
       default: null,
+    },
+  },
+  computed: {
+    totalEpisodes() {
+      return this.episodes ? this.episodes.length : 0;
+    },
+    completedEpisodesCount() {
+      return this.completedIndex > -1 ? this.completedIndex + 1 : 0;
     },
   },
   methods: {
@@ -285,14 +296,29 @@ export default {
 }
 
 .sidebar-header {
-  background-color: #2EBC2E !important;
-  color: white !important;
+  background-color: #D9D9D9 !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   height: 60px;
   border-radius: 5px;
   box-shadow: 0 0 1px 1px black;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Align items with space between */
+  padding: 0 20px; /* Add some padding */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mohtawiyat-title {
+  color: #454040;
+}
+
+.taqadum-title {
+  color: #B51A1A;
 }
 
 .selected-episode {

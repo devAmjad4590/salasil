@@ -14,9 +14,11 @@
       <!-- <button>تابع المشاهدة</button> -->
     </div>
     <div class="details">
-      <div class="Play-button" @click="continueWatching">
+      <div class="Play-button">
         <h2>{{ this.course['الاسم'] }}</h2>
-        <IconPlayerPlayFilled size="30" color="black" />
+        <div class="play-icon-wrapper" @click="continueWatching">
+          <IconPlayerPlayFilled size="30" color="white"/>
+        </div>
       </div>
       <p>
         {{ this.course['وصف مختصر'] }}
@@ -156,7 +158,7 @@ h2 {
 }
 
 .details h2 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   margin-right: 15px
 
 }
@@ -178,6 +180,21 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-left: 25px;
+}
+
+.play-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  border-radius: 50%;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.play-icon-wrapper:hover {
+  background-color: #9e1616;
 }
 </style>

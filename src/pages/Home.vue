@@ -1,8 +1,9 @@
 <template>
   <div>
     <NavBar :button="true" @filters-changed="updateFilters"></NavBar>
+    <loading-spinner v-if="loading"></loading-spinner>
   </div>
-  <div class="pa-4">
+  <div class="pa-4" v-if="!loading">
     <v-container>
       <v-row no-gutters>
         <v-col
@@ -25,9 +26,11 @@
 import NavBar from "../components/NavBar.vue";
 import Card from "../components/Card.vue";
 import { get } from "../db";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 
 export default {
   created() {
+    this.loading = true;
     fetch("/db/salasil.json")
       .then((response) => response.json())
       .then((data) => {
@@ -53,9 +56,7 @@ export default {
           })
           .sort((a, b) => a.المدة - b.المدة); // Sort courses by duration from short to long
           // initially filter courses to arabic
-
-
-
+        this.loading = false;
       });
   },
   data() {
@@ -67,11 +68,13 @@ export default {
         audio_language: "",
         المدة: 0,
       },
+      loading: false,
     };
   },
   components: {
     NavBar,
     Card,
+    LoadingSpinner,
   },
   methods: {
     updateFilters() {
@@ -87,7 +90,7 @@ export default {
           const courseCategories = Array.isArray(course.التصانيف)
             ? course.التصانيف
             : [course.التصانيف];
-          const hasMatchingCategory = this.filters.التصانيف.every(
+          const hasMatchingCategory = this.filters.التصانيف.some(
             (filterCategory) => courseCategories.includes(filterCategory)
           );
           if (!hasMatchingCategory) {

@@ -1,7 +1,8 @@
 <template>
   <NavBar :back="true" :button="false" @back="goHome" color="#2EBC2E"></NavBar>
   <div class="container">
-    <div>
+    <loading-spinner v-if="loading"></loading-spinner>
+    <div v-if="!loading">
       <div class="p-container">
         <MainContent v-if="!loading" :course="selectedCourse"></MainContent>
         <div class="scroller">
@@ -21,6 +22,7 @@
 import Sidebar from "../components/Sidebar.vue";
 import MainContent from "../components/MainContent.vue";
 import NavBar from "../components/NavBar.vue";
+import LoadingSpinner from "../components/LoadingSpinner.vue";
 
 export default {
   name: "playlist",
@@ -33,6 +35,7 @@ export default {
     Sidebar,
     MainContent,
     NavBar,
+    LoadingSpinner,
   },
   async created() {
     const courseId = this.$route.params.id;
