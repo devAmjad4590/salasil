@@ -8,10 +8,11 @@
         <v-col
           v-for="course in filtreredCourses"
           :key="course['معرف قائمة التشغيل']"
-          class="pa-6"
-          xs="12"
+          cols="12"
+          sm="6"
           md="4"
-          xl="3"
+          lg="3"
+          class="pa-4"
         >
           <Card :course="course"></Card>
         </v-col>

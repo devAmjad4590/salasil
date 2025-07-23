@@ -1,8 +1,9 @@
 <template>
-  <v-card class="mx-auto" max-width="870">
-    <v-card-title class="bg-cyan-darken-1">
-      <p class="red--text text-h5">التقدم: ١/٤</p>
+  <v-card class="mx-auto" :max-width="fullWidth ? undefined : maxWidth">
+    <v-card-title class="sidebar-header">
+      <p class="text-h5">التقدم: ١/٤</p>
     </v-card-title>
+
     <v-col
       v-for="course in filtreredCourses"
       :key="course['معرف قائمة التشغيل']"
@@ -18,6 +19,7 @@
         v-for="(episode, index) in episodes"
         :key="index"
         class="card"
+        :class="{ 'selected-episode': episode['معرف الفيديو'] === selectedVideoId }"
         :to="{
           name: 'VideoPlayer',
           params: {
@@ -25,6 +27,7 @@
             videoId: episode['معرف الفيديو'],
           },
         }"
+        :disabled="!isEpisodeEnabled(index)"
         link
         @click="handleClick"
       >
@@ -36,8 +39,7 @@
 
           <IconClockHour9Filled size="32" color="black" />
           <div
-            :class="['checkmark', { checked: isChecked }]"
-            @click.stop="toggleCheck"
+            :class="['checkmark', { checked: completedStatus[index] }]"
           ></div>
         </span>
       </v-card>
@@ -53,7 +55,8 @@ export default {
 
   data() {
     return {
-      isChecked: false,
+      completedStatus: [],
+      completedIndex: -1,
       videoId: null,
       videoLink: null,
       playlistId: null,
@@ -68,11 +71,26 @@ export default {
   components: {
     IconClockHour9Filled,
   },
+  created() {
+    this.loadProgress();
+  },
   props: {
     course: {
       type: Object,
       required: true,
       default: () => ({}),
+    },
+    fullWidth: {
+      type: Boolean,
+      default: false,
+    },
+    maxWidth: {
+      type: [String, Number],
+      default: 870,
+    },
+    selectedVideoId: {
+      type: String,
+      default: null,
     },
   },
   methods: {
@@ -80,8 +98,24 @@ export default {
       return text.length > 97 ? text.slice(0, 97) + "....." : text;
     },
 
-    toggleCheck() {
-      this.isChecked = !this.isChecked;
+    isEpisodeEnabled(index) {
+      return this.completedStatus[index] || index === this.completedIndex + 1;
+    },
+
+    loadProgress() {
+      const progressKey = `salasil-progress-${this.course["معرف قائمة التشغيل"]}`;
+      const progress = JSON.parse(localStorage.getItem(progressKey));
+
+      if (progress && typeof progress.completedIndex === "number") {
+        this.completedIndex = progress.completedIndex;
+        const completedCount = progress.completedIndex + 1;
+        this.completedStatus = this.episodes.map(
+          (_, index) => index < completedCount
+        );
+      } else {
+        this.completedIndex = -1;
+        this.completedStatus = this.episodes.map(() => false);
+      }
     },
 
     handleClick() {
@@ -220,7 +254,6 @@ export default {
   border-radius: 50%;
   border: 2px solid black;
   position: relative;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,5 +282,20 @@ export default {
   border-right: 5px solid green;
   border-bottom: 5px solid green;
   opacity: 1;
+}
+
+.sidebar-header {
+  background-color: #2EBC2E !important;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  height: 60px;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px black;
+  display: flex;
+  align-items: center;
+}
+
+.selected-episode {
+  background-color: #8CE775 !important;
 }
 </style>

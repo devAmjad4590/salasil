@@ -1,5 +1,5 @@
 <template>
-  <NavBar :back="true" :button="false" @back="goHome"></NavBar>
+  <NavBar :back="true" :button="false" @back="goHome" color="#2EBC2E"></NavBar>
   <div class="container">
     <div>
       <div class="p-container">
@@ -9,6 +9,7 @@
             class="pa-4"
             v-if="!loading"
             :course="selectedCourse"
+            maxWidth="100vw"
           ></Sidebar>
         </div>
       </div>

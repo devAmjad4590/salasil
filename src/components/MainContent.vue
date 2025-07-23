@@ -14,7 +14,7 @@
       <!-- <button>تابع المشاهدة</button> -->
     </div>
     <div class="details">
-      <div class="Play-button">
+      <div class="Play-button" @click="continueWatching">
         <h2>{{ this.course['الاسم'] }}</h2>
         <IconPlayerPlayFilled size="30" color="black" />
       </div>
@@ -78,7 +78,23 @@ export default {
     convertToArabicNumerals(str){
       return str.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
 
-    }
+    },
+    continueWatching() {
+      const progressKey = `salasil-progress-${this.course["معرف قائمة التشغيل"]}`;
+      const progress = JSON.parse(localStorage.getItem(progressKey)) || {
+        completedIndex: -1,
+      };
+      const nextVideoIndex = progress.completedIndex + 1;
+      const videoToPlay = this.course["الفيديوهات"][nextVideoIndex] || this.course["الفيديوهات"][0];
+
+      this.$router.push({
+        name: 'VideoPlayer',
+        params: {
+          playlistId: this.course["معرف قائمة التشغيل"],
+          videoId: videoToPlay["معرف الفيديو"],
+        },
+      });
+    },
   }
 
   
@@ -162,5 +178,6 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-left: 25px;
+  cursor: pointer;
 }
 </style>

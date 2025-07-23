@@ -1,7 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <transition name="slide-fade">
+          <component :is="Component" :key="$route.fullPath" />
+        </transition>
+      </router-view>
     </v-main>
   </v-app>
 </template>

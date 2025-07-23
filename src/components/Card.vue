@@ -1,7 +1,5 @@
 <template>
   <v-card
-    :width="370"
-    :height="360"
     class="card"
     rounded
     elevation="10"
@@ -16,9 +14,7 @@
       <v-img
         cover
         :src="course['الفيديوهات'][0]['صورة مصغرة']"
-        aspect-ratio="4/3"
-        :width="350"
-        :height="193"
+        aspect-ratio="16/9"
         class="centered-img"
         rounded
       />

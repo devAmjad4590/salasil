@@ -7,14 +7,16 @@
       ></video>
     </div>
 
-
-    <Sidebar
-      @course-selected="fetchCourse"
-      v-if="!this.loading && !this.error"
-      :course="selectedCourse"
-      class="video-bar"
-    >
-    </Sidebar>
+    <div class="sidebar-wrapper">
+      <Sidebar
+        @course-selected="fetchCourse"
+        v-if="!this.loading && !this.error"
+        :course="selectedCourse"
+        :full-width="true"
+        :selected-video-id="$route.params.videoId"
+      >
+      </Sidebar>
+    </div>
   </div>
 </template>
 
@@ -30,21 +32,13 @@ import 'videojs-http-source-selector';
 
 export default {
   name: "playlist",
-  mounted(){
-    this.fetchCourse();
-    setTimeout(() => {
-      this.initializePlayer();
-    }, 500);
+  async mounted(){
+    await this.fetchCourse();
+    this.initializePlayer();
   },
   beforeDestroy(){
     this.destroyPlayer();
   },
-  watch: {
-    videoLink(newVal, oldVal){
-      if(newVal !== oldVal && oldVal !== null){
-        this.$router.go(0);
-    }
-  }},
   data() {
     return {
       isChecked: false,
@@ -73,16 +67,50 @@ export default {
           src: this.videoLink
         }],
         controls: true,
+        autoplay: true,
+        muted: true,
         playbackRates: [0.5, 1, 1.5, 2], // Speed settings
       });
+
+      console.log("Player initialized");
 
       // Add quality selector plugin
       this.player.httpSourceSelector();
 
+      this.player.on('pause', () => {
+        console.log("Video paused");
+      });
+
       this.player.on('ended', () => {
-        // const id = this.playlistId;
-       // here is the function mr nasr !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      })
+        console.log("Video ended");
+        const videoIndex = this.selectedCourse["الفيديوهات"].findIndex(
+          (video) => video["معرف الفيديو"] == this.$route.params.videoId
+        );
+        if (videoIndex === -1) return;
+
+        const progressKey = `salasil-progress-${this.$route.params.playlistId}`;
+        const progress = JSON.parse(localStorage.getItem(progressKey)) || {
+          completedIndex: -1,
+        };
+
+        if (videoIndex > progress.completedIndex) {
+          progress.completedIndex = videoIndex;
+          localStorage.setItem(progressKey, JSON.stringify(progress));
+          console.log("Progress saved:", progress);
+        }
+
+        const nextVideoIndex = videoIndex + 1;
+        if (nextVideoIndex < this.selectedCourse["الفيديوهات"].length) {
+          const nextVideo = this.selectedCourse["الفيديوهات"][nextVideoIndex];
+          this.$router.push({
+            name: 'VideoPlayer',
+            params: {
+              playlistId: this.$route.params.playlistId,
+              videoId: nextVideo["معرف الفيديو"],
+            },
+          });
+        }
+      });
     },
     destroyPlayer(){
       if(this.player){
@@ -102,7 +130,7 @@ export default {
           (video) => video["معرف الفيديو"] == this.$route.params.videoId
         );
         if (this.selectedVideo) {
-          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo["معرف الفيديو"]}?rel=0&modestbranding=0&controls=1&showinfo=0&autoplay=0`;
+          this.videoLink = `https://www.youtube.com/embed/${this.selectedVideo["معرف الفيديو"]}?rel=0&modestbranding=0&controls=1&showinfo=0&autoplay=1`;
         } else {
           this.error = true;
         }
@@ -132,21 +160,13 @@ export default {
   flex-direction: column;
 }
 
-.video-bar {
-  margin-left: 0.5px;
-  margin-right: 0.5px;
-}
-
-.Sidebsr {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 10px;
-  margin-right: -19px;
+.sidebar-wrapper {
+  width: 100%;
 }
 
 .video-frame {
   width: 100%;
-  height: 76vh;
+  height: 75vh;
   aspect-ratio: 16/9;
 }
 

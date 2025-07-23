@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="#2EBC2E" :elevation="2" class="app-bar">
+  <v-app-bar :color="color" :elevation="2" class="app-bar">
     <v-app-bar-nav-icon @click.stop="drawer = !drawer">
       <IconMenu2 v-if="button" size="35" color="white" />
     </v-app-bar-nav-icon>
@@ -139,7 +139,11 @@ export default {
 
   props: {
     button: Boolean,
-    back: Boolean
+    back: Boolean,
+    color: {
+      type: String,
+      default: "#2EBC2E",
+    },
   },
   methods: {
     showMoreCategories() {
@@ -194,6 +198,7 @@ export default {
 
 .app-bar {
   padding: 0 16px;
+  margin-bottom: 20px;
 }
 
 .title-link {
