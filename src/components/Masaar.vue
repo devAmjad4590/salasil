@@ -5,7 +5,7 @@
       <button @click="scrollRight" class="arrow right-arrow">&#10094;</button>
       <div class="slider" ref="slider">
         <div v-for="item in masaarItems" :key="item['معرف قائمة التشغيل']" class="slide-item">
-          <Card :course="item" class="ma-4"></Card>
+          <MasaarCard :course="item" class="ma-4"></MasaarCard>
         </div>
       </div>
       <button @click="scrollLeft" class="arrow left-arrow">&#10095;</button>
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import Card from "./Card.vue";
+import MasaarCard from "./MasaarCard.vue";
 
 export default {
   components: {
-    Card,
+    MasaarCard,
   },
   data() {
     return {

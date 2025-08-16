@@ -83,7 +83,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  width: 300px;
+  width: 350px;
   height: 100%;
   display: flex;
   flex-direction: column;
