@@ -1,7 +1,7 @@
 <template>
   <v-app-bar :color="color" :elevation="2" class="app-bar">
     <v-app-bar-nav-icon @click.stop="drawer = !drawer">
-      <IconMenu2 v-if="button" size="35" color="white" />
+      <IconMenu2 v-if="button" size="35" color="#2c3e50" />
     </v-app-bar-nav-icon>
     <v-spacer></v-spacer>
     <router-link to="/" class="title-link" @click="handleTitleClick">
@@ -9,7 +9,7 @@
     </router-link>
     <v-spacer></v-spacer>
     <v-app-bar-nav-icon class="ml-3">
-      <IconArrowBack v-if="back" @click="$emit('back')"  size="35" color="white" />
+      <IconArrowBack v-if="back" @click="$emit('back')"  size="35" color="#2c3e50" />
     </v-app-bar-nav-icon>
   </v-app-bar>
   <v-navigation-drawer
@@ -142,7 +142,7 @@ export default {
     back: Boolean,
     color: {
       type: String,
-      default: "#2EBC2E",
+      default: "#F5F5F5",
     },
   },
   methods: {
@@ -190,15 +190,14 @@ export default {
 .title {
   font-size: 35px;
   font-family: "Zain", sans-serif;
-  font-weight: 400;
+  font-weight: 800;
   font-style: normal;
   margin-left: 50px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #2c3e50;
 }
 
 .app-bar {
   padding: 0 16px;
-  margin-bottom: 20px;
 }
 
 .title-link {

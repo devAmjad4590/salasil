@@ -1,5 +1,5 @@
 <template>
-  <NavBar :back="true" :button="false" @back="goHome" color="#2EBC2E"></NavBar>
+  <NavBar :back="true" :button="false" @back="goHome"></NavBar>
   <div class="container">
     <loading-spinner v-if="loading"></loading-spinner>
     <div v-if="!loading">

@@ -1,35 +1,31 @@
 <template>
-  <v-card
-    class="card"
-    rounded
-    elevation="10"
-    hover
-    link
+  <router-link
     :to="{
       name: 'Playlist',
       params: { id: this.course['معرف قائمة التشغيل'] },
     }"
+    class="card-link"
   >
-    <div class="image-container">
-      <v-img
-        cover
-        :src="course['الفيديوهات'][0]['صورة مصغرة']"
-        aspect-ratio="16/9"
-        class="centered-img"
-        rounded
-      />
-      <div class="overlay">
-        <div class="rectangle" :style="{ width: rectangleWidth }">
-          <span class="rectangle-text">{{ formattedDuration }}</span>
+    <div class="card">
+      <div class="image-container">
+        <img
+          :src="course['الفيديوهات'][0]['صورة مصغرة']"
+          class="centered-img"
+        />
+        <div class="overlay">
+          <div class="rectangle" :style="{ width: rectangleWidth }">
+            <span class="rectangle-text">{{ formattedDuration }}</span>
+          </div>
         </div>
       </div>
+      <div class="card-content">
+        <h2 class="card-title">{{ this.course.الاسم }}</h2>
+        <p class="text-right">
+          {{ truncatedText }}
+        </p>
+      </div>
     </div>
-
-    <h2 class="card-title">{{ this.course.الاسم }}</h2>
-    <p class="text-right">
-      {{ truncatedText }}
-    </p>
-  </v-card>
+  </router-link>
 </template>
 
 <script>
@@ -76,8 +72,54 @@ export default {
 </script>
 
 <style scoped>
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover .centered-img {
+  transform: scale(1.05);
+}
+
+.card:hover .card-title,
+.card:hover .text-right {
+  color: #157536;
+}
+
 .image-container {
   position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.centered-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .overlay {
@@ -104,38 +146,31 @@ export default {
   text-align: right;
 }
 
-.centered-img {
-  display: block;
-  margin: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow to the image */
-}
-
-.card {
-  border: 3px solid #c0c0c0;
-  padding: 9px 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Add shadow to the image */
+.card-content {
+  padding: 12px 4px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .card-title {
   text-align: right;
-  font-size: 20px;
-  font-family: "Zain", sans-serif;
-  font-weight: 800;
-  font-style: normal;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  color: #157536;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  margin-right: 1%;
+  font-size: 18px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  transition: color 0.3s;
 }
 
 .text-right {
   text-align: right;
-  font-size: 16px;
-  font-family: "Zain", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin-right: 1%;
+  font-size: 14px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.5;
+  flex-grow: 1;
+  transition: color 0.3s;
 }
 </style>
