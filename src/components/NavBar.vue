@@ -192,7 +192,6 @@ export default {
   font-family: "Zain", sans-serif;
   font-weight: 800;
   font-style: normal;
-  margin-left: 50px;
   color: #2c3e50;
 }
 

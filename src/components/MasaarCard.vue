@@ -71,7 +71,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,5 +86,16 @@ export default {
   font-weight: 700;
   text-align: center;
   padding: 0 20px;
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 90vw;
+    height: 200px;
+  }
+
+  .card-title {
+    font-size: 24px;
+  }
 }
 </style>
